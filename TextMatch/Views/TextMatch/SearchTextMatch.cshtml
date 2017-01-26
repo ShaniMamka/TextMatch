@@ -1,0 +1,36 @@
+﻿@model TextMatch.Models.TextMatchModel
+
+@{
+    ViewBag.Title = "SearchTextMatch";
+}
+
+<h2>Welcome to Text Match</h2>
+
+<h4 style="color:red">@Html.DisplayFor(model => model.ErrorMessage)</h4>
+
+@using (Html.BeginForm("SearchTextMatchIndexes", "TextMatch", FormMethod.Post))
+{
+    <div>
+        <div>
+            <div for="text">Text</div>@Html.TextBoxFor(model => model.Text, new { id = "text", style = "width: 50%;" })
+        </div>
+        <br/>
+        <div>
+            <div for="sub-text">Subtext</div>@Html.TextBoxFor(model => model.Subtext, new { id = "sub-text", style = "width: 50%;" })
+        </div>   
+    </div>
+    <br />
+    <button type="submit">Get Text Match Indexes</button>
+}
+
+@{
+    if (@Model.MatchIndexes.Count != 0)
+    {
+        string matchIndexesStr = string.Join(",", @Model.MatchIndexes);
+        <div style="color:green">@matchIndexesStr</div>
+    }
+    else if (ViewBag.MatchIndexesMessage != null)
+    {
+        <div style="color:blue">@ViewBag.MatchIndexesMessage</div>
+    }
+}
